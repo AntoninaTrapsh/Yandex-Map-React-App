@@ -2,6 +2,19 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectError, selectLoadingStatus, selectResults, selectRoutes} from "../../../../services/store/selectors/map";
 import {addRoute, deleteRoute, fetchSearchResults} from "../../../../services/store/slices/map";
+import RoutesList from "./components/routes-list/routes-list";
+import styled from "styled-components";
+import SearchResult from "./components/search-result/search-result";
+import SearchInput from "./components/search-input/search-input";
+
+const SearchBarContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f9f9f9;
+    padding: 20px 40px 0 40px
+`
+
 
 const Sidebar = () => {
     const dispatch = useDispatch();
@@ -25,7 +38,6 @@ const Sidebar = () => {
         searchGeoPosition(inputValue);
     }
 
-
     const handleChange = (event) => {
         setInputValue(event.target.value);
     };
@@ -36,6 +48,7 @@ const Sidebar = () => {
 
     const handleSelect = (route) => {
         dispatch(addRoute(route));
+        setInputValue("");
     }
 
     const handleDelete = (routeId) => {
@@ -43,37 +56,14 @@ const Sidebar = () => {
     }
 
     return (
-        <div>
-            <input
-                value={inputValue}
-                placeholder="Поиск..."
-                onChange={handleChange}
-                onBlur={handleBlur}
-            />
-            <button onClick={handleClick}>Показать результаты</button>
+        <SearchBarContainer>
+            <SearchInput inputValue={inputValue} handleChange={handleChange} handleBlur={handleBlur} handleClick={handleClick}/>
             {
-                !!results.length &&
-                    results.map((place, index) => {
-                        return <div key={index} onClick={() => handleSelect(place)}>{`${index + 1} RESULT: ${place.address}`}</div>
-                    })
+                inputValue ?
+                    <SearchResult results={results} handleSelect={handleSelect}/> :
+                    <RoutesList routes={routes} handleDelete={handleDelete}/>
             }
-            <div>
-                <h1>
-                    ROUTES
-                </h1>
-                {
-                    !!routes.length &&
-                        routes.map((route) => {
-                            return (
-                                <div key={route.id}>
-                                    <div>{route.address}</div>
-                                    <button onClick={() => handleDelete(route.id)}>&#10006;</button>
-                                </div>
-                            )
-                        })
-                }
-            </div>
-        </div>
+        </SearchBarContainer>
     );
 }
 

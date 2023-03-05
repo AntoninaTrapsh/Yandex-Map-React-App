@@ -1,6 +1,12 @@
 import {YMaps, Map, Placemark, Polyline} from '@pbe/react-yandex-maps';
 import {useSelector} from "react-redux";
 import {selectCoordinates, selectRoutes} from "../../../../services/store/selectors/map";
+import styled from "styled-components";
+
+const MapContainer = styled.div`
+    flex: 2;
+    max-height: 80vh;
+`
 
 const YMap = () => {
     const routes = useSelector(selectRoutes);
@@ -8,8 +14,7 @@ const YMap = () => {
 
     return (
         <YMaps>
-            <div>
-                My awesome application with maps!
+            <MapContainer>
                 <Map
                     defaultState={{
                         center: [55.75, 37.57],
@@ -17,8 +22,10 @@ const YMap = () => {
                         controls: ["zoomControl", "fullscreenControl"],
                     }}
                     modules={["control.ZoomControl", "control.FullscreenControl"]}
-                    width="700px"
-                    height="700px"
+                    style={{
+                        flex: 2,
+                        height: "calc(100vh - 57px)"
+                    }}
                 >
                     {
                         !!routes.length &&
@@ -41,7 +48,7 @@ const YMap = () => {
                     }}
                 />
                 </Map>
-            </div>
+            </MapContainer>
         </YMaps>
     )
 }

@@ -25,6 +25,7 @@ export const mapSlice = createSlice({
         addRoute: (state, action) => {
             const newRoute = {...action.payload, id: uuid()};
             state.routes.push(newRoute);
+            state.results = [];
         },
         deleteRoute: (state, action) => {
             const routeIndex = state.routes.findIndex((route) => {
