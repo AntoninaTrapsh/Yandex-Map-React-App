@@ -27,9 +27,12 @@ export const mapSlice = createSlice({
             state.routes.push(newRoute);
         },
         deleteRoute: (state, action) => {
-            state.routes.findIndex((route) => {
+            const routeIndex = state.routes.findIndex((route) => {
                 return route.id === action.payload;
             })
+            if (routeIndex >= 0) {
+                state.routes.splice(routeIndex, 1);
+            }
         },
         changeRoutePosition: (state) => {
             // TODO swap waypoints (dnd)
