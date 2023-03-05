@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectError, selectLoadingStatus, selectResults, selectRoutes} from "../../../../services/store/selectors/map";
-import {addRoute, fetchSearchResults} from "../../../../services/store/slices/map";
+import {addRoute, deleteRoute, fetchSearchResults} from "../../../../services/store/slices/map";
 
 const Sidebar = () => {
     const dispatch = useDispatch();
@@ -38,6 +38,10 @@ const Sidebar = () => {
         dispatch(addRoute(route));
     }
 
+    const handleDelete = (routeId) => {
+        dispatch(deleteRoute(routeId));
+    }
+
     return (
         <div>
             <input
@@ -60,7 +64,12 @@ const Sidebar = () => {
                 {
                     !!routes.length &&
                         routes.map((route) => {
-                            return <div key={route.id}>{route.address}</div>
+                            return (
+                                <div key={route.id}>
+                                    <div>{route.address}</div>
+                                    <button onClick={() => handleDelete(route.id)}>&#10006;</button>
+                                </div>
+                            )
                         })
                 }
             </div>
