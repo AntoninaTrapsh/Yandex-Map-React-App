@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import MapApiClient from "../../clients/api-client/api-client";
 import {v4 as uuid} from "uuid";
+import {coordinateConverter} from "../../utils/converter";
 
 const initialState = {
     results: [],
@@ -53,11 +54,11 @@ export const mapSlice = createSlice({
                 }
 
                 state.results = data.reduce((result, curPosition) => {
-                    const positionInfo = {
+                    const formattedCoordinates = coordinateConverter(curPosition.GeoObject.Point.pos);
+                    result.push({
                         address: curPosition.GeoObject.metaDataProperty.GeocoderMetaData.Address.formatted,
-                        coordinates: curPosition.GeoObject.Point.pos,
-                    }
-                    result.push(positionInfo);
+                        coordinates: formattedCoordinates,
+                    })
                     return result;
                 }, []);
 

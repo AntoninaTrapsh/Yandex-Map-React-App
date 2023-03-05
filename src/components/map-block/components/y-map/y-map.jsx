@@ -1,6 +1,11 @@
-import {YMaps, Map, Placemark, Polyline, SearchControl} from '@pbe/react-yandex-maps';
+import {YMaps, Map, Placemark, Polyline} from '@pbe/react-yandex-maps';
+import {useSelector} from "react-redux";
+import {selectCoordinates, selectRoutes} from "../../../../services/store/selectors/map";
 
 const YMap = () => {
+    const routes = useSelector(selectRoutes);
+    const polylineCoordinates = useSelector(selectCoordinates);
+
     return (
         <YMaps>
             <div>
@@ -15,16 +20,27 @@ const YMap = () => {
                     width="700px"
                     height="700px"
                 >
-                <SearchControl options={{ float: "right" }} />
-                <Placemark
-                    modules={["geoObject.addon.balloon"]}
-                    defaultGeometry={[55.75, 37.57]}
-                    properties={{
-                        balloonContentBody:
-                            "This is balloon loaded by the Yandex.Maps API module system",
+                    {
+                        !!routes.length &&
+                            routes.map((route) => {
+                                return <Placemark key={route.id}
+                                    modules={["geoObject.addon.balloon"]}
+                                    geometry={route.coordinates}
+                                    properties={{
+                                    balloonContentBody: route.address,
+                                    }}
+                                />
+                            })
+                    }
+                <Polyline
+                    geometry={polylineCoordinates}
+                    options={{
+                        balloonCloseButton: false,
+                        strokeColor: "#000",
+                        strokeWidth: 4,
+                        strokeOpacity: 0.5,
                     }}
                 />
-                <Polyline/>
                 </Map>
             </div>
         </YMaps>
