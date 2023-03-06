@@ -8,6 +8,7 @@ import SearchResult from "./components/search-result/search-result";
 import SearchInput from "./components/search-input/search-input";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
+import Loader from "../../../loader/loader";
 
 const SearchBarContainer = styled.div`
     display: flex;
@@ -18,7 +19,6 @@ const SearchBarContainer = styled.div`
     text-align: left;
 `
 
-
 const Sidebar = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState("");
@@ -27,26 +27,18 @@ const Sidebar = () => {
     const isLoading = useSelector(selectLoadingStatus);
     const requestError = useSelector(selectError);
 
-    const [error, setError] = useState("");
-
-    const isValidValue = () => {
-        //TODO validation
-    }
-
     const searchGeoPosition = (value) => {
         dispatch(fetchSearchResults(value));
     };
-
-    const handleClick = () => {
-        searchGeoPosition(inputValue);
-    }
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
     };
 
-    const handleBlur = () => {
-        setError(null)
+    const handlePressEnter = (event) => {
+        if (event.key === 'Enter'){
+            searchGeoPosition(inputValue);
+        }
     }
 
     const handleSelect = (route) => {
@@ -60,10 +52,14 @@ const Sidebar = () => {
 
     return (
         <SearchBarContainer>
-            <SearchInput inputValue={inputValue} handleChange={handleChange} handleBlur={handleBlur} handleClick={handleClick}/>
+            <SearchInput inputValue={inputValue} handleChange={handleChange} handleKeyPress={handlePressEnter}/>
             {
                 inputValue ?
-                    <SearchResult results={results} handleSelect={handleSelect}/> :
+                    (
+                        isLoading ?
+                        <Loader/> :
+                        <SearchResult results={results} handleSelect={handleSelect} warning={requestError}/>
+                    ) :
                     <DndProvider backend={HTML5Backend}>
                         <RoutesList routes={routes} handleDelete={handleDelete}/>
                     </DndProvider>

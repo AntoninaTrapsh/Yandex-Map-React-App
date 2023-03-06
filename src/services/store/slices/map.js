@@ -7,8 +7,8 @@ const initialState = {
     results: [],
     routes: [],
     requestError: null,
-    isModalOpen: false,
-    isResultsLoading: false,
+    isLoading: false,
+    centerMapPoint: [55.75, 37.57],
 }
 
 export const fetchSearchResults = createAsyncThunk(
@@ -25,6 +25,7 @@ export const mapSlice = createSlice({
         addRoute: (state, action) => {
             const newRoute = {...action.payload, id: uuid()};
             state.routes.push(newRoute);
+            state.centerMapPoint = [...action.payload.coordinates];
             state.results = [];
         },
         deleteRoute: (state, action) => {
@@ -40,16 +41,11 @@ export const mapSlice = createSlice({
             routes.splice(action.payload.toIndex, 0, routes.splice(action.payload.fromIndex, 1)[0]);
             state.routes = routes;
         },
-        openModal: (state) => {
-            state.isOpen = true;
-        },
-        closeModal: (state) => {
-            state.isOpen = false;
-        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchSearchResults.pending, state => {
+                state.requestError = null;
                 state.isLoading = true;
             })
             .addCase(fetchSearchResults.fulfilled, (state, action) => {
@@ -68,7 +64,6 @@ export const mapSlice = createSlice({
                     return result;
                 }, []);
 
-                state.requestError = null;
                 state.isLoading = false;
             })
             .addCase(fetchSearchResults.rejected, state => {
@@ -85,8 +80,6 @@ export const {
     addRoute,
     deleteRoute,
     changeRoutePosition,
-    openModal,
-    closeModal,
 } = mapSlice.actions
 
 export default mapSlice.reducer

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import SearchWarning from "../search-warning/search-warning";
 
 const Result = styled.div` 
     width: 100%;
@@ -17,16 +18,23 @@ const Title = styled.h3`
     margin-bottom: 7px;
 `
 
-const SearchResult = ({results, handleSelect}) => {
+const SearchResult = ({results, handleSelect, warning}) => {
 
     return (
         <>
-            <Title>Результаты поиска</Title>
+            {
+                !!warning && <SearchWarning>{warning}</SearchWarning>
+            }
             {
                 !!results.length &&
-                results.map((place, index) => {
-                    return <Result key={index} onClick={() => handleSelect(place)}>{place.address}</Result>
-                })
+                <div>
+                    <Title>Результаты поиска:</Title>
+                    {
+                        results.map((place, index) => {
+                            return <Result key={index} onClick={() => handleSelect(place)}>{place.address}</Result>
+                        })
+                    }
+                </div>
             }
         </>
     )
