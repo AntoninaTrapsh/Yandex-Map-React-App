@@ -1,20 +1,38 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import MapApiClient from "../../clients/api-client/api-client";
 import {v4 as uuid} from "uuid";
-import {coordinateConverter} from "../../utils/converter";
+import {coordinateConverter} from "../../../utils/converter";
+import {WARNING_TEXT} from "../../../utils/const";
 
 const initialState = {
     results: [],
     routes: [],
     requestError: null,
-    isLoading: false,
-    centerMapPoint: [55.75, 37.57],
+    isSearchResultLoading: false,
+    isRouteLoading: false,
+    isPolylineVisible: true,
+    mapState: {
+        center: [55.75, 37.57],
+        zoom: 10,
+    }
 }
 
 export const fetchSearchResults = createAsyncThunk(
     'mapSlice/fetchSearchResults',
     async (value) => {
         return await MapApiClient.getGeoPosition(value);
+    }
+)
+
+export const fetchAddressByCoordinates = createAsyncThunk(
+    'mapSlice/fetchAddressByCoordinates',
+    async ({coordinates, id}, ...args) => {
+        const {response} = await MapApiClient.getGeoPosition(coordinates)
+        return {
+            response,
+            coordinates,
+            id
+        };
     }
 )
 
@@ -25,7 +43,10 @@ export const mapSlice = createSlice({
         addRoute: (state, action) => {
             const newRoute = {...action.payload, id: uuid()};
             state.routes.push(newRoute);
-            state.centerMapPoint = [...action.payload.coordinates];
+            state.mapState = {
+                center: action.payload.coordinates,
+                zoom: 15,
+            }
             state.results = [];
         },
         deleteRoute: (state, action) => {
@@ -36,23 +57,26 @@ export const mapSlice = createSlice({
                 state.routes.splice(routeIndex, 1);
             }
         },
-        changeRoutePosition: (state, action) => {
+        changeRoutePositionFromList: (state, action) => {
             const routes = state.routes;
             routes.splice(action.payload.toIndex, 0, routes.splice(action.payload.fromIndex, 1)[0]);
             state.routes = routes;
         },
+        hidePolyline: (state) => {
+            state.isPolylineVisible = false;
+        }
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchSearchResults.pending, state => {
                 state.requestError = null;
-                state.isLoading = true;
+                state.isSearchResultLoading= true;
             })
             .addCase(fetchSearchResults.fulfilled, (state, action) => {
                 const data = [...action.payload.response.GeoObjectCollection.featureMember];
 
                 if (!data.length) {
-                    state.requestError = "По вашему запросу ничего не найдено";
+                    state.requestError = WARNING_TEXT.SEARCH_ERROR;
                 }
 
                 state.results = data.reduce((result, curPosition) => {
@@ -64,14 +88,41 @@ export const mapSlice = createSlice({
                     return result;
                 }, []);
 
-                state.isLoading = false;
+                state.isSearchResultLoading = false;
             })
             .addCase(fetchSearchResults.rejected, state => {
-                state.isLoading = false;
-                state.requestError = 'Произошла ошибка, попробуйте попозже';
+                state.isSearchResultLoading = false;
+                state.requestError = WARNING_TEXT.REQUEST_ERROR;
             })
-            .addDefaultCase((state) => {
-                state.isLoading = false;
+            .addCase(fetchAddressByCoordinates.pending, state => {
+                state.isRouteLoading = true;
+            })
+            .addCase(fetchAddressByCoordinates.fulfilled, (state, action) => {
+                const data = [...action.payload.response.GeoObjectCollection.featureMember];
+
+                if (!data.length) {
+                    throw new Error(WARNING_TEXT.SEARCH_ERROR);
+                }
+
+                const newRoute = {
+                    address: data[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.formatted,
+                    coordinates: action.payload.coordinates,
+                    id: action.payload.id,
+                }
+
+                const routeIndex = state.routes.findIndex((route) => {
+                    return route.id === action.payload.id;
+                })
+
+                state.isPolylineVisible = true;
+
+                state.routes[routeIndex] = newRoute;
+
+                state.isRouteLoading = false;
+            })
+            .addCase(fetchAddressByCoordinates.rejected, state => {
+                state.isRouteLoading = false;
+                throw new Error(WARNING_TEXT.REQUEST_ERROR);
             })
     }
 })
@@ -79,7 +130,8 @@ export const mapSlice = createSlice({
 export const {
     addRoute,
     deleteRoute,
-    changeRoutePosition,
+    changeRoutePositionFromList,
+    hidePolyline,
 } = mapSlice.actions
 
 export default mapSlice.reducer

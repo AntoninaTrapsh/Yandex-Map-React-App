@@ -1,9 +1,9 @@
 import React, {useRef} from "react";
 import styled from "styled-components";
-import {ItemTypes} from "../../../../../../services/utils/dnd-types";
+import {ItemTypes} from "../../../../../../utils/dnd-types";
 import {useDrag, useDrop} from "react-dnd";
 import {useDispatch} from "react-redux";
-import {changeRoutePosition} from "../../../../../../services/store/slices/map";
+import {changeRoutePositionFromList} from "../../../../../../services/store/slices/map";
 
 const Route = styled.div`
     display: flex;
@@ -79,7 +79,7 @@ const RouteElement = ({route, handleDelete, index}) => {
                 fromIndex: hoverIndex
             }
 
-            dispatch(changeRoutePosition(indices));
+            dispatch(changeRoutePositionFromList(indices));
 
             item.index = hoverIndex;
         }
