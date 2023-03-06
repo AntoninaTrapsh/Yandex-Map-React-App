@@ -8,8 +8,6 @@ const YMap = () => {
 
     return (
         <YMaps>
-            <div>
-                My awesome application with maps!
                 <Map
                     defaultState={{
                         center: [55.75, 37.57],
@@ -17,8 +15,10 @@ const YMap = () => {
                         controls: ["zoomControl", "fullscreenControl"],
                     }}
                     modules={["control.ZoomControl", "control.FullscreenControl"]}
-                    width="700px"
-                    height="700px"
+                    style={{
+                        flex: 2,
+                        height: "calc(100vh - 57px)"
+                    }}
                 >
                     {
                         !!routes.length &&
@@ -41,7 +41,6 @@ const YMap = () => {
                     }}
                 />
                 </Map>
-            </div>
         </YMaps>
     )
 }
