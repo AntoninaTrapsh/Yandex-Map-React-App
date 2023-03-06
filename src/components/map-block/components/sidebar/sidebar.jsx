@@ -8,6 +8,7 @@ import SearchResult from "./components/search-result/search-result";
 import SearchInput from "./components/search-input/search-input";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
+import Loader from "../../../loader/loader";
 
 const SearchBarContainer = styled.div`
     display: flex;
@@ -63,7 +64,9 @@ const Sidebar = () => {
             <SearchInput inputValue={inputValue} handleChange={handleChange} handleBlur={handleBlur} handleClick={handleClick}/>
             {
                 inputValue ?
-                    <SearchResult results={results} handleSelect={handleSelect}/> :
+                    (isLoading ?
+                    <Loader/> :
+                    <SearchResult results={results} handleSelect={handleSelect}/>) :
                     <DndProvider backend={HTML5Backend}>
                         <RoutesList routes={routes} handleDelete={handleDelete}/>
                     </DndProvider>

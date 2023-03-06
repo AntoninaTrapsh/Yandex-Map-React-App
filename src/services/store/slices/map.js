@@ -8,7 +8,7 @@ const initialState = {
     routes: [],
     requestError: null,
     isModalOpen: false,
-    isResultsLoading: false,
+    isLoading: false,
 }
 
 export const fetchSearchResults = createAsyncThunk(
