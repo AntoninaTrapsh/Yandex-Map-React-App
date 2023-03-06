@@ -13,7 +13,7 @@ const initialState = {
 
 export const fetchSearchResults = createAsyncThunk(
     'mapSlice/fetchSearchResults',
-    async (value, thunkAPI) => {
+    async (value) => {
         return await MapApiClient.getGeoPosition(value);
     }
 )
@@ -35,8 +35,10 @@ export const mapSlice = createSlice({
                 state.routes.splice(routeIndex, 1);
             }
         },
-        changeRoutePosition: (state) => {
-            // TODO swap waypoints (dnd)
+        changeRoutePosition: (state, action) => {
+            const routes = state.routes;
+            routes.splice(action.payload.toIndex, 0, routes.splice(action.payload.fromIndex, 1)[0]);
+            state.routes = routes;
         },
         openModal: (state) => {
             state.isOpen = true;
@@ -82,6 +84,7 @@ export const mapSlice = createSlice({
 export const {
     addRoute,
     deleteRoute,
+    changeRoutePosition,
     openModal,
     closeModal,
 } = mapSlice.actions

@@ -6,6 +6,8 @@ import RoutesList from "./components/routes-list/routes-list";
 import styled from "styled-components";
 import SearchResult from "./components/search-result/search-result";
 import SearchInput from "./components/search-input/search-input";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
 const SearchBarContainer = styled.div`
     display: flex;
@@ -62,7 +64,9 @@ const Sidebar = () => {
             {
                 inputValue ?
                     <SearchResult results={results} handleSelect={handleSelect}/> :
-                    <RoutesList routes={routes} handleDelete={handleDelete}/>
+                    <DndProvider backend={HTML5Backend}>
+                        <RoutesList routes={routes} handleDelete={handleDelete}/>
+                    </DndProvider>
             }
         </SearchBarContainer>
     );

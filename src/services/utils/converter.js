@@ -6,9 +6,3 @@ export const coordinateConverter = (coordinates) => {
         })
         .reverse()
 }
-
-export const concatRouteCoordinate = (routes) => {
-    return routes.map((route) => {
-        return coordinateConverter(route.coordinates);
-    })
-}
