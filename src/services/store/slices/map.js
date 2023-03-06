@@ -50,6 +50,7 @@ export const mapSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchSearchResults.pending, state => {
+                state.requestError = null;
                 state.isLoading = true;
             })
             .addCase(fetchSearchResults.fulfilled, (state, action) => {
@@ -68,7 +69,6 @@ export const mapSlice = createSlice({
                     return result;
                 }, []);
 
-                state.requestError = null;
                 state.isLoading = false;
             })
             .addCase(fetchSearchResults.rejected, state => {

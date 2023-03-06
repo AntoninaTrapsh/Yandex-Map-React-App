@@ -17,11 +17,18 @@ const Title = styled.h3`
     margin-bottom: 7px;
 `
 
-const SearchResult = ({results, handleSelect}) => {
+const Warning = styled.p`
+    padding: 5px 0;
+    margin: 0;
+    color: grey;
+`
+
+const SearchResult = ({results, handleSelect, warning}) => {
 
     return (
         <>
-            <Title>Результаты поиска</Title>
+            <Title>Результаты поиска:</Title>
+            { !!warning && <Warning>{warning}</Warning> }
             {
                 !!results.length &&
                 results.map((place, index) => {

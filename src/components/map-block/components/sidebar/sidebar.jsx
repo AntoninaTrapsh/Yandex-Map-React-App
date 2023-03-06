@@ -66,7 +66,7 @@ const Sidebar = () => {
                 inputValue ?
                     (isLoading ?
                     <Loader/> :
-                    <SearchResult results={results} handleSelect={handleSelect}/>) :
+                    <SearchResult results={results} handleSelect={handleSelect} warning={requestError}/>) :
                     <DndProvider backend={HTML5Backend}>
                         <RoutesList routes={routes} handleDelete={handleDelete}/>
                     </DndProvider>
