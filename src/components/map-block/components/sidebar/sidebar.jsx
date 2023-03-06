@@ -19,7 +19,6 @@ const SearchBarContainer = styled.div`
     text-align: left;
 `
 
-
 const Sidebar = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState("");
@@ -27,12 +26,6 @@ const Sidebar = () => {
     const routes = useSelector(selectRoutes);
     const isLoading = useSelector(selectLoadingStatus);
     const requestError = useSelector(selectError);
-
-    const [error, setError] = useState("");
-
-    const isValidValue = () => {
-        //TODO validation
-    }
 
     const searchGeoPosition = (value) => {
         dispatch(fetchSearchResults(value));
@@ -46,10 +39,6 @@ const Sidebar = () => {
         setInputValue(event.target.value);
     };
 
-    const handleBlur = () => {
-        setError(null)
-    }
-
     const handleSelect = (route) => {
         dispatch(addRoute(route));
         setInputValue("");
@@ -61,12 +50,14 @@ const Sidebar = () => {
 
     return (
         <SearchBarContainer>
-            <SearchInput inputValue={inputValue} handleChange={handleChange} handleBlur={handleBlur} handleClick={handleClick}/>
+            <SearchInput inputValue={inputValue} handleChange={handleChange} handleClick={handleClick}/>
             {
                 inputValue ?
-                    (isLoading ?
-                    <Loader/> :
-                    <SearchResult results={results} handleSelect={handleSelect} warning={requestError}/>) :
+                    (
+                        isLoading ?
+                        <Loader/> :
+                        <SearchResult results={results} handleSelect={handleSelect} warning={requestError}/>
+                    ) :
                     <DndProvider backend={HTML5Backend}>
                         <RoutesList routes={routes} handleDelete={handleDelete}/>
                     </DndProvider>
