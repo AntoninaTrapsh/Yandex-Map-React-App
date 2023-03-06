@@ -10,7 +10,7 @@ const Input = styled.input`
     line-height: 1.25;
     padding: 10px 5px;
     background-color: #f5f5f5;
-    width: 200px;
+    width: 100%;
     
     &:focus {
         outline: 0;

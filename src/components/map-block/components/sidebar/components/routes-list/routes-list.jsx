@@ -20,13 +20,22 @@ const RoutesListContainer = styled.div`
 const Route = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
+    padding: 3px 0;
+    margin: 0;
+    border-bottom: 1px solid #bdbdbd;
     cursor: pointer;
     
     &:hover {
-        background-color: #f7f6f9;
+        background-color: rgb(235 239 239);
+        border-bottom: 1px solid #03a9f4;
     }
+`
+
+const Title = styled.h3`
+    margin-bottom: 7px;
 `
 
 const EmptyWarning = styled.p`
@@ -37,7 +46,7 @@ const RoutesList = ({routes, handleDelete}) => {
 
     return (
         <>
-            <h3>Выбранный маршрут</h3>
+            <Title>Выбранный маршрут</Title>
             {
                 routes.length ?
                 <RoutesListContainer>

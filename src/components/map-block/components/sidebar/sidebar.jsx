@@ -9,10 +9,11 @@ import SearchInput from "./components/search-input/search-input";
 
 const SearchBarContainer = styled.div`
     display: flex;
+    flex: 1;
     flex-direction: column;
-    align-items: flex-start;
     background-color: #f9f9f9;
-    padding: 20px 40px 0 40px
+    padding: 20px 40px 0 40px;
+    text-align: left;
 `
 
 
