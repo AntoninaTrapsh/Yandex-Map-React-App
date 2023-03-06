@@ -22,15 +22,19 @@ const SearchResult = ({results, handleSelect, warning}) => {
 
     return (
         <>
-            <Title>Результаты поиска:</Title>
             {
                 !!warning && <SearchWarning>{warning}</SearchWarning>
             }
             {
                 !!results.length &&
-                results.map((place, index) => {
-                    return <Result key={index} onClick={() => handleSelect(place)}>{place.address}</Result>
-                })
+                <div>
+                    <Title>Результаты поиска:</Title>
+                    {
+                        results.map((place, index) => {
+                            return <Result key={index} onClick={() => handleSelect(place)}>{place.address}</Result>
+                        })
+                    }
+                </div>
             }
         </>
     )

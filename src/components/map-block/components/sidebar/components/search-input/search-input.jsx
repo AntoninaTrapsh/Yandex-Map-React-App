@@ -20,13 +20,14 @@ const Input = styled.input`
     }
 `
 
-const SearchInput = ({inputValue, handleChange}) => {
+const SearchInput = ({inputValue, handleChange, handleKeyPress}) => {
     return (
         <>
             <Input
                 value={inputValue}
                 placeholder="Поиск"
                 onChange={handleChange}
+                onKeyPress={handleKeyPress}
             />
         </>
     )

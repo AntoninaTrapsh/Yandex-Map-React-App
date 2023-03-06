@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectError, selectLoadingStatus, selectResults, selectRoutes} from "../../../../services/store/selectors/map";
 import {addRoute, deleteRoute, fetchSearchResults} from "../../../../services/store/slices/map";
@@ -9,7 +9,6 @@ import SearchInput from "./components/search-input/search-input";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import Loader from "../../../loader/loader";
-import { debounce } from "lodash";
 
 const SearchBarContainer = styled.div`
     display: flex;
@@ -32,14 +31,15 @@ const Sidebar = () => {
         dispatch(fetchSearchResults(value));
     };
 
-    const debouncedSearchGeoPosition = debounce(searchGeoPosition, 700);
-    // eslint-disable-next-line
-    const handleSearchValue = useCallback((value) => debouncedSearchGeoPosition(value), []);
-
     const handleChange = (event) => {
         setInputValue(event.target.value);
-        handleSearchValue(event.target.value);
     };
+
+    const handlePressEnter = (event) => {
+        if (event.key === 'Enter'){
+            searchGeoPosition(inputValue);
+        }
+    }
 
     const handleSelect = (route) => {
         dispatch(addRoute(route));
@@ -52,7 +52,7 @@ const Sidebar = () => {
 
     return (
         <SearchBarContainer>
-            <SearchInput inputValue={inputValue} handleChange={handleChange}/>
+            <SearchInput inputValue={inputValue} handleChange={handleChange} handleKeyPress={handlePressEnter}/>
             {
                 inputValue ?
                     (
