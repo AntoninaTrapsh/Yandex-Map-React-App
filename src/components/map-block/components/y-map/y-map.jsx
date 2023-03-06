@@ -1,18 +1,36 @@
 import {YMaps, Map, Placemark, Polyline} from '@pbe/react-yandex-maps';
-import {useSelector} from "react-redux";
-import {selectCenterMapPoint, selectCoordinates, selectRoutes} from "../../../../services/store/selectors/map";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    selectCoordinates,
+    selectMapState,
+    selectPolylineVisibleStatus,
+    selectRoutes
+} from "../../../../services/store/selectors/map";
+import {fetchAddressByCoordinates, hidePolyline} from "../../../../services/store/slices/map";
 
 const YMap = () => {
+    const dispatch = useDispatch();
+    const isPolylineVisible = useSelector(selectPolylineVisibleStatus);
     const routes = useSelector(selectRoutes);
     const polylineCoordinates = useSelector(selectCoordinates);
-    const center = useSelector(selectCenterMapPoint);
+    const options = useSelector(selectMapState);
 
     const mapState = {
-        center,
-        zoom: 9,
+        ...options,
         controls: ["zoomControl", "fullscreenControl"],
     }
 
+    const handleDragStart = () => {
+        dispatch(hidePolyline());
+    }
+
+    const handleDragEnd = (e, id) => {
+        const coordinates = e.originalEvent.target.geometry._coordinates;
+        dispatch(fetchAddressByCoordinates({
+            id,
+            coordinates
+        }));
+    }
 
     return (
         <YMaps>
@@ -33,17 +51,25 @@ const YMap = () => {
                                     properties={{
                                     balloonContentBody: route.address,
                                     }}
+                                    options={{
+                                        draggable: true,
+                                    }}
+                                    onDragEnd={(e) => handleDragEnd(e, route.id)}
+                                    onDragStart={() => handleDragStart()}
                                 />
                             })
                     }
-                <Polyline
-                    geometry={polylineCoordinates}
-                    options={{
-                        strokeColor: "#000",
-                        strokeWidth: 4,
-                        strokeOpacity: 0.5,
-                    }}
-                />
+                    {
+                        isPolylineVisible &&
+                        <Polyline
+                            geometry={polylineCoordinates}
+                            options={{
+                                strokeColor: "#000",
+                                strokeWidth: 4,
+                                strokeOpacity: 0.5,
+                            }}
+                        />
+                    }
                 </Map>
         </YMaps>
     )

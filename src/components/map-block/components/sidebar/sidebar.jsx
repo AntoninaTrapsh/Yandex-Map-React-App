@@ -1,6 +1,11 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectError, selectLoadingStatus, selectResults, selectRoutes} from "../../../../services/store/selectors/map";
+import {
+    selectError,
+    selectResults,
+    selectRoutes, selectRoutesLoadingStatus,
+    selectSearchLoadingStatus
+} from "../../../../services/store/selectors/map";
 import {addRoute, deleteRoute, fetchSearchResults} from "../../../../services/store/slices/map";
 import RoutesList from "./components/routes-list/routes-list";
 import styled from "styled-components";
@@ -24,7 +29,8 @@ const Sidebar = () => {
     const [inputValue, setInputValue] = useState("");
     const results = useSelector(selectResults);
     const routes = useSelector(selectRoutes);
-    const isLoading = useSelector(selectLoadingStatus);
+    const isSearchResultLoading = useSelector(selectSearchLoadingStatus);
+    const isRouteLoading = useSelector(selectRoutesLoadingStatus);
     const requestError = useSelector(selectError);
 
     const searchGeoPosition = (value) => {
@@ -56,12 +62,12 @@ const Sidebar = () => {
             {
                 inputValue ?
                     (
-                        isLoading ?
+                        isSearchResultLoading ?
                         <Loader/> :
                         <SearchResult results={results} handleSelect={handleSelect} warning={requestError}/>
                     ) :
                     <DndProvider backend={HTML5Backend}>
-                        <RoutesList routes={routes} handleDelete={handleDelete}/>
+                        <RoutesList routes={routes} handleDelete={handleDelete} isLoading={isRouteLoading}/>
                     </DndProvider>
             }
         </SearchBarContainer>

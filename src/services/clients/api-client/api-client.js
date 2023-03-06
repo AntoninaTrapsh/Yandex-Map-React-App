@@ -7,12 +7,8 @@ class ApiClient {
     }
 
     async getGeoPosition(geocode) {
-        return await this._request(`${this.BASE_URL}&geocode=${geocode}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        const query = Array.isArray(geocode) ? `${geocode[1]},${geocode[0]}` : geocode;
+        return await this._request(`${this.BASE_URL}&geocode=${query}`);
     }
 
     async checkResponse(response) {
