@@ -8,6 +8,7 @@ const initialState = {
     routes: [],
     requestError: null,
     isLoading: false,
+    centerMapPoint: [55.75, 37.57],
 }
 
 export const fetchSearchResults = createAsyncThunk(
@@ -24,6 +25,7 @@ export const mapSlice = createSlice({
         addRoute: (state, action) => {
             const newRoute = {...action.payload, id: uuid()};
             state.routes.push(newRoute);
+            state.centerMapPoint = [...action.payload.coordinates];
             state.results = [];
         },
         deleteRoute: (state, action) => {

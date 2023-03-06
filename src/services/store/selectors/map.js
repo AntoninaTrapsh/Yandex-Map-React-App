@@ -1,4 +1,4 @@
-export const selectModalState = (store) => store.map.isModalOpen;
+export const selectCenterMapPoint= (store) => store.map.centerMapPoint;
 export const selectLoadingStatus = (store) => store.map.isLoading;
 export const selectError = (store) => store.map.requestError;
 export const selectRoutes = (store) => store.map.routes;
