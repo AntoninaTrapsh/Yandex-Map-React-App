@@ -7,7 +7,6 @@ const initialState = {
     results: [],
     routes: [],
     requestError: null,
-    isModalOpen: false,
     isLoading: false,
 }
 
@@ -39,12 +38,6 @@ export const mapSlice = createSlice({
             const routes = state.routes;
             routes.splice(action.payload.toIndex, 0, routes.splice(action.payload.fromIndex, 1)[0]);
             state.routes = routes;
-        },
-        openModal: (state) => {
-            state.isOpen = true;
-        },
-        closeModal: (state) => {
-            state.isOpen = false;
         },
     },
     extraReducers: (builder) => {
@@ -85,8 +78,6 @@ export const {
     addRoute,
     deleteRoute,
     changeRoutePosition,
-    openModal,
-    closeModal,
 } = mapSlice.actions
 
 export default mapSlice.reducer

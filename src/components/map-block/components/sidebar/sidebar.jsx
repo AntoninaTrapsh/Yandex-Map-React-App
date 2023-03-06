@@ -33,6 +33,7 @@ const Sidebar = () => {
     };
 
     const debouncedSearchGeoPosition = debounce(searchGeoPosition, 2000);
+    // eslint-disable-next-line
     const handleSearchValue = useCallback((value) => debouncedSearchGeoPosition(value), []);
 
     const handleChange = (event) => {
