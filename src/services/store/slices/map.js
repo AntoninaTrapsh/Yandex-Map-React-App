@@ -58,9 +58,7 @@ export const mapSlice = createSlice({
             }
         },
         changeRoutePositionFromList: (state, action) => {
-            const routes = state.routes;
-            routes.splice(action.payload.toIndex, 0, routes.splice(action.payload.fromIndex, 1)[0]);
-            state.routes = routes;
+            state.routes.splice(action.payload.toIndex, 0, state.routes.splice(action.payload.fromIndex, 1)[0]);
         },
         hidePolyline: (state) => {
             state.isPolylineVisible = false;
@@ -122,7 +120,6 @@ export const mapSlice = createSlice({
             })
             .addCase(fetchAddressByCoordinates.rejected, state => {
                 state.isRouteLoading = false;
-                throw new Error(WARNING_TEXT.REQUEST_ERROR);
             })
     }
 })

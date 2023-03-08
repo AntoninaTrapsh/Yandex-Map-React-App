@@ -40,4 +40,4 @@ const SearchResult = ({results, handleSelect, warning}) => {
     )
 }
 
-export default SearchResult;
+export default React.memo(SearchResult);

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     selectError,
@@ -33,28 +33,28 @@ const Sidebar = () => {
     const isRouteLoading = useSelector(selectRoutesLoadingStatus);
     const requestError = useSelector(selectError);
 
-    const searchGeoPosition = (value) => {
+    const searchGeoPosition = useCallback((value) => {
         dispatch(fetchSearchResults(value));
-    };
+    }, [dispatch]);
 
-    const handleChange = (event) => {
+    const handleChange = useCallback((event) => {
         setInputValue(event.target.value);
-    };
+    }, []);
 
-    const handlePressEnter = (event) => {
+    const handlePressEnter = useCallback((event) => {
         if (event.key === 'Enter'){
             searchGeoPosition(inputValue);
         }
-    }
+    }, [inputValue, searchGeoPosition])
 
-    const handleSelect = (route) => {
+    const handleSelect = useCallback((route) => {
         dispatch(addRoute(route));
         setInputValue("");
-    }
+    }, [dispatch])
 
-    const handleDelete = (routeId) => {
+    const handleDelete = useCallback((routeId) => {
         dispatch(deleteRoute(routeId));
-    }
+    }, [dispatch])
 
     return (
         <SearchBarContainer>

@@ -2,9 +2,10 @@ import styled from "styled-components";
 import React from "react";
 import RouteElement from "../route-element/route-element";
 import Loader from "../../../../../loader/loader";
+import {WARNING_TEXT} from "../../../../../../utils/const";
 
 const RoutesListContainer = styled.div`
-    display: flex,
+    display: flex;
     justify-content: center;
 `
 
@@ -34,11 +35,11 @@ const RoutesList = ({routes, handleDelete, isLoading}) => {
                                         })
                                     }
                                 </RoutesListContainer> :
-                                <EmptyWarning>Ни одна точка маршрута не указана</EmptyWarning>
+                                <EmptyWarning>{WARNING_TEXT.NO_POINTS}</EmptyWarning>
                         )
             }
         </>
     )
 }
 
-export default RoutesList;
+export default React.memo(RoutesList);

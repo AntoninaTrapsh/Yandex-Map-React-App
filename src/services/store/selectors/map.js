@@ -1,12 +1,15 @@
-export const selectMapState= (store) => store.map.mapState;
-export const selectSearchLoadingStatus = (store) => store.map.isSearchResultLoading;
-export const selectRoutesLoadingStatus = (store) => store.map.isRouteLoading;
-export const selectError = (store) => store.map.requestError;
-export const selectPolylineVisibleStatus = (store) => store.map.isPolylineVisible;
-export const selectRoutes = (store) => store.map.routes;
-export const selectResults = (store) => store.map.results;
-export const selectCoordinates = (store) => {
-    return store.map.routes.map((route) => {
+import {createSelector} from "@reduxjs/toolkit";
+
+const selectMap = state => state.map
+export const selectMapState= createSelector(selectMap, (state) => state.mapState)
+export const selectSearchLoadingStatus = createSelector(selectMap, (state) => state.isSearchResultLoading)
+export const selectRoutesLoadingStatus = createSelector(selectMap, (state) => state.isRouteLoading)
+export const selectError = createSelector(selectMap, (state) => state.requestError)
+export const selectPolylineVisibleStatus = createSelector(selectMap, (state) => state.isPolylineVisible)
+export const selectRoutes = createSelector(selectMap, (state) => state.routes)
+export const selectResults = createSelector(selectMap, (state) => state.results)
+export const selectCoordinates = createSelector(selectRoutes, (routes) => {
+    return routes.map((route) => {
         return route.coordinates;
     })
-}
+})
