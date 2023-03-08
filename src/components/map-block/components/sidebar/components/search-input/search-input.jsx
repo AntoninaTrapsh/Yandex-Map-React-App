@@ -8,6 +8,7 @@ const Input = styled.input`
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     line-height: 1.25;
+    font-size: 14px;
     padding: 10px 5px;
     background-color: #f5f5f5;
     width: 100%;
