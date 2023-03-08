@@ -13,9 +13,9 @@ class ApiClient {
 
     async checkResponse(response) {
         if (response.ok) {
-        return await response.json();
+            return await response.json();
         } else {
-            return response.json().then((err) => Promise.reject(err))
+            return Promise.reject();
         }
     }
 }

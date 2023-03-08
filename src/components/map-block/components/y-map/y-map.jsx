@@ -49,7 +49,7 @@ const YMap = () => {
                                     modules={["geoObject.addon.balloon"]}
                                     geometry={route.coordinates}
                                     properties={{
-                                    balloonContentBody: route.address,
+                                        balloonContentBody: route.address,
                                     }}
                                     options={{
                                         draggable: true,
