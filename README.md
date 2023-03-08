@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+<h1 align="center">Yandex Map</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" />
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-202124?style=flat-square&logo=javascript&logoColor=F7DF1E" />
+  <img src="https://img.shields.io/badge/-React-202124?logo=react&logoColor=61DAFB&style=flat-square" />
+  <img src="https://img.shields.io/badge/Redux-593D88?style=flat-square&logo=redux&logoColor=white" />
+  <img src="https://img.shields.io/badge/Jest-C21325?style=flat-square&logo=jest&logoColor=white" />
+</div>
 
-## Available Scripts
+<h1 id="about">О проекте</h1>
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <p> - Пользователь в интерактивном режиме может создавать на карте маршрут, указывая начальную, конечную и промежуточные точки движения. </p>
+        <p> - Для каждой точки маршрута можно посмотреть ее адрес. </p>
+        <p> - Напротив каждой точки маршрута в списке находится кнопка удаления, при ее нажатии точка маршрута пропадает из списка, а с карты пропадает ее маркер. </p>
+      </td>
+      <td width="70%">
+        <img src="https://user-images.githubusercontent.com/82774971/223872264-cf9e2f6f-276a-4d13-bd1f-ef75c35af334.png" alt="image"/>
+      </td>
+     <tr>
+      <td>
+        <p> - Порядок точек маршрута в списке/на карте можно изменять перетаскиванием. </p>
+        <p> - Маркеры на карте соединены прямыми линиями в том порядке, в котором они находятся в списке. </p>
+        <p> - При изменении порядка точек в списке или их удалении, а также при перемещении маркеров маршрут на карте автоматически перерисовывается. </p>
+      </td>
+      <td width="70%">
+        <img src="https://user-images.githubusercontent.com/82774971/223872595-f2a9b7cf-a869-4774-b018-62e53e5d13c4.png" alt="image"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-In the project directory, you can run:
+<h1 id="install">Установка</h1>
 
-### `npm start`
+<ol>
+    <li><p>Клонируем репозиторий в рабочую директорию</p></li>
+    <pre>git clone https://github.com/AntoninaTrapsh/React-Burger.git</pre>
+    <li>
+      В рабочей директории должна появиться папка проекта <code>react-burger</code>
+    </li>
+    <li>
+      Переходим в данную папку.
+    </li>
+    <li>
+        <p>Устанавливаем зависимости:</p>
+        <pre>npm install</pre>
+    </li>
+    <li>
+        <p>Запускаем проект:</p>
+        <pre>npm run start</pre>
+    </li>
+</ol>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<h1 id="test">Тестирование</h1>
+<ol>
+    <li>
+      <p>Тестирование бизнес-логики приложения:</p>
+    <pre>npm run test</pre>
+    </li>
+</ol>
