@@ -31,7 +31,7 @@ const SearchResult = ({results, handleSelect, warning}) => {
                     <Title>Результаты поиска:</Title>
                     {
                         results.map((place, index) => {
-                            return <Result key={index} onClick={() => handleSelect(place)}>{place.address}</Result>
+                            return <Result key={index} onClick={() => handleSelect(place)} data-test={"result"}>{place.address}</Result>
                         })
                     }
                 </div>

@@ -1,5 +1,5 @@
 class ApiClient {
-    API_KEY = "1b13c97a-4747-4e2c-9e4a-1e4725c87ca3";
+    API_KEY = "1b13c97a-4747-4e2c-9e4a-1e4725c87ca3"; //добавлено в демонстрационных целях
     BASE_URL = `https://geocode-maps.yandex.ru/1.x/?apikey=${this.API_KEY}&format=json`;
 
     async _request(url, options)  {
