@@ -4,7 +4,7 @@ import {v4 as uuid} from "uuid";
 import {coordinateConverter} from "../../../utils/converter";
 import {WARNING_TEXT} from "../../../utils/const";
 
-const initialState = {
+export const initialState = {
     results: [],
     routes: [],
     requestError: null,
@@ -26,7 +26,7 @@ export const fetchSearchResults = createAsyncThunk(
 
 export const fetchAddressByCoordinates = createAsyncThunk(
     'mapSlice/fetchAddressByCoordinates',
-    async ({coordinates, id}, ...args) => {
+    async ({coordinates, id}) => {
         const {response} = await MapApiClient.getGeoPosition(coordinates)
         return {
             response,
