@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import SearchWarning from "../search-warning/search-warning";
+import PropTypes from "prop-types";
 
 const Result = styled.div` 
     width: 100%;
@@ -38,6 +39,12 @@ const SearchResult = ({results, handleSelect, warning}) => {
             }
         </>
     )
+}
+
+SearchResult.propTypes = {
+    results: PropTypes.array.isRequired,
+    handleSelect: PropTypes.func.isRequired,
+    warning: PropTypes.string.isRequired,
 }
 
 export default React.memo(SearchResult);

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Input = styled.input`
     border: none;
@@ -32,6 +33,12 @@ const SearchInput = ({inputValue, handleChange, handleKeyPress}) => {
             />
         </>
     )
+}
+
+SearchInput.propTypes = {
+    inputValue: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    handleKeyPress: PropTypes.func.isRequired,
 }
 
 export default SearchInput;
