@@ -9,6 +9,8 @@
   <img src="https://img.shields.io/badge/Jest-C21325?style=flat-square&logo=jest&logoColor=white" />
 </div>
 
+<h3 align="center">Посмотреть рабочее приложение на <a href="https://antoninatrapsh.github.io/Yandex-Map-React-App/">GitHubPages</a></h3>
+
 <h1 id="about">О проекте</h1>
 <table>
   <tbody>
