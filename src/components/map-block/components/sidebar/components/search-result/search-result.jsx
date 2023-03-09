@@ -44,7 +44,6 @@ const SearchResult = ({results, handleSelect, warning}) => {
 SearchResult.propTypes = {
     results: PropTypes.array.isRequired,
     handleSelect: PropTypes.func.isRequired,
-    warning: PropTypes.string.isRequired,
 }
 
 export default React.memo(SearchResult);
