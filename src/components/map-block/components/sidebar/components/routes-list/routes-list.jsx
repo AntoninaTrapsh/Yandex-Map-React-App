@@ -4,6 +4,7 @@ import RouteElement from "../route-element/route-element";
 import Loader from "../../../../../loader/loader";
 import {WARNING_TEXT} from "../../../../../../utils/const";
 import SearchWarning from "../search-warning/search-warning";
+import PropTypes from "prop-types";
 
 const RoutesListContainer = styled.div`
     display: flex;
@@ -38,6 +39,12 @@ const RoutesList = ({routes, handleDelete, isLoading}) => {
             }
         </>
     )
+}
+
+RoutesList.propTypes = {
+    routes: PropTypes.array.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
 }
 
 export default React.memo(RoutesList);

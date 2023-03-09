@@ -4,6 +4,8 @@ import {ItemTypes} from "../../../../../../utils/dnd-types";
 import {useDrag, useDrop} from "react-dnd";
 import {useDispatch} from "react-redux";
 import {changeRoutePositionFromList} from "../../../../../../services/store/slices/map";
+import PropTypes from "prop-types";
+import {ROUTE_TYPE} from "../../../../../../utils/types";
 
 const Route = styled.div`
     display: flex;
@@ -95,6 +97,12 @@ const RouteElement = ({route, handleDelete, index}) => {
             <Button onClick={() => handleDelete(route.id)}>&#10006;</Button>
         </Route>
     )
+}
+
+RouteElement.propTypes = {
+    route: ROUTE_TYPE.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
 }
 
 export default RouteElement;
